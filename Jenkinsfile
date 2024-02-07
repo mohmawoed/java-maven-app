@@ -9,8 +9,12 @@ pipeline {
         stage("increment version") {
             steps {
                 script {
-                    echo "building the application..."
-                    echo "building the application..."
+                    echo "Incremnet version for app"
+                    sh 'mvn build-helper:parse-version versions:set \
+                    -DnewVersion=\\\${parsedVersion.nextMajorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.incrementalVersion} versions:commit'
+                    def matcher = readFile('pom.xml') =~ ' <version>(.+)</version>'
+                    def version = matcher[0][1]
+                    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                 }
             }
         }
@@ -18,7 +22,7 @@ pipeline {
             steps {
                 script {
                     echo "building the application..."
-                    sh 'mvn package'
+                    sh 'mvn clean package'
 
                 }
             }
@@ -26,11 +30,11 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    sh 'docker build -t mohmawoed/demo-app:jM-1.0 .'
+                    sh "docker build -t mohmawoed/${IMAGE_NAME} ."
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                      }
-                    sh 'docker push mohmawoed/demo-app:jM-1.0'
+                    sh "docker push mohmawoed/${IMAGE_NAME}"
                 }
             }
         }
