@@ -30,11 +30,11 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    sh "docker build -t mohmawoed/jm:${IMAGE_NAME} ."
+                    sh "docker build -t mohmawoed/demo-app:${IMAGE_NAME} ."
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                      }
-                    sh "docker push mohmawoed/jm:${IMAGE_NAME}"
+                    sh "docker push mohmawoed/demo-app:${IMAGE_NAME}"
                 }
             }
         }
