@@ -25,11 +25,11 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    buildImage 'mohmawoed/demo-app:jM-1.0'
+                    sh 'docker build -t mohmawoed/demo-app:jM-1.0 .'
                      script.withCredentials([script.usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         script.sh "echo $script.PASS | docker login -u $script.USER --password-stdin"
                      }
-                    dockerPush 'mohmawoed/demo-app:jM-1.0'
+                    sh 'docker push mohmawoed/demo-app:jM-1.0'
                 }
             }
         }
