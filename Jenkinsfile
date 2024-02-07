@@ -9,7 +9,7 @@ pipeline {
         stage("increment version") {
             steps {
                 script {
-
+                    echo "building the application..."
                 }
             }
         }
