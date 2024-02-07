@@ -27,7 +27,7 @@ pipeline {
                 script {
                     sh 'docker build -t mohmawoed/demo-app:jM-1.0 .'
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        script.sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
                      }
                     sh 'docker push mohmawoed/demo-app:jM-1.0'
                 }
