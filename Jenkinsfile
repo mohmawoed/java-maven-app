@@ -33,22 +33,20 @@ pipeline {
                     sh "docker build -t mohmawoed/demo-app:${IMAGE_NAME} ."
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                     }
+                    }
                     sh "docker push mohmawoed/demo-app:${IMAGE_NAME}"
                 }
             }
         }
-        stage('Commit Version update'){
+        stage("Commit Version update"){
             setps{
                 script{
                      withCredentials([usernamePassword(credentialsId: 'git-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh 'git config user.email "Jenkins@example.com"'
-                        sh 'git config user.name "Jenkins"'
-                        
-                        sh 'git status'
-                        sh 'git branch'
-                        sh 'git config --list'
-
+                        sh 'git config --global user.email "Jenkins@example.com"'
+                        sh 'git config --global user.name "Jenkins"'
+                        //sh 'git status'
+                        //sh 'git branch'
+                        //sh 'git config --list'
                         sh 'git remote set-url origin https://${USER}:${PASS}@https://github.com/mohmawoed/java-maven-app.git'
                         sh 'git add .'
                         sh 'git commit -m "update version"'
