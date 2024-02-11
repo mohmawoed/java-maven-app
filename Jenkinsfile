@@ -48,7 +48,7 @@ pipeline {
         stage("Commit Version update"){
             steps{
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'git-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                   /* withCredentials([usernamePassword(credentialsId: 'git-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh 'git config --global user.email "Jenkins@example.com"'
                         sh 'git config --global user.name "Jenkins"'
                         
@@ -65,7 +65,19 @@ pipeline {
                    // sh 'git add .'
                     //sh 'git commit -m "update version"
                    
-                    }
+                    }**/
+
+                    checkout([$class: 'GitSCM', branches: [[name: 'feature/SoftVer']], userRemoteConfigs: [[url: 'https://github.com/mohmawoed/java-maven-app.gi', credentialsId: 'github-token']]])
+                        sh 'git config --global user.email "Jenkins@example.com"'
+                        sh 'git config --global user.name "Jenkins"'
+                        
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config  --list'
+                        sh 'git add .'
+                        sh 'git commit -m "Jenkins automated commit"'
+                        sh 'git push origin HEAD:feature/SoftVer'
+
 
                 }
                 
