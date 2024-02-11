@@ -44,28 +44,16 @@ pipeline {
         stage("Commit Version update"){
             setps{
                 script{
-
                     git credentialsId: GITHUB_CREDENTIALS, url: 'https://github.com/mohmawoed/java-maven-app.git'' 
-
+                    sh 'git config --global user.email "Jenkins@example.com"'
+                    sh 'git config --global user.name "Jenkins"'
                     sh 'git add .'
-                    sh 'git commit -m "update version"'
+                    sh 'git commit -m "update version"
                     sh 'git push origin HEAD:feature/SoftVer'
 
-                    withCredentials([usernamePassword(credentialsId: 'git-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-
-                    }
-                        sh 'git config --global user.email "Jenkins@example.com"'
-                        sh 'git config --global user.name "Jenkins"'
-                        sh 'git status'
-                        sh 'git branch'
-                        sh 'git config --list'
-                        sh 'git remote set-url origin https://${USER}:${PASS}@https://github.com/mohmawoed/java-maven-app.git'
-                        sh 'git add .'
-                        sh 'git commit -m "update version"'
-                        sh 'git push origin HEAD:feature/SoftVer'
-                
-                     }
                 }
+                
             }
         }
     }
+}
