@@ -49,6 +49,7 @@ pipeline {
         }
         stage("Commit Version update"){
             steps{
+                script{
                         sh 'git config --global user.email "Jenkins@example.com"'
                         sh 'git config --global user.name "Jenkins"'
                         
