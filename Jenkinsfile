@@ -48,15 +48,24 @@ pipeline {
         stage("Commit Version update"){
             steps{
                 script{
-                    checkout scm
-                    sh 'git add .'
-                    sh 'git commit -m "Jenkins automated commit"'
-                    git credentialsId: GITHUB_CREDENTIALS, url: 'https://github.com/mohmawoed/java-maven-app.git'' 
-               //     sh 'git config --global user.email "Jenkins@example.com"'
-                 //   sh 'git config --global user.name "Jenkins"'
+                    withCredentials([usernamePassword(credentialsId: 'git-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh 'git config --global user.email "Jenkins@example.com"'
+                        sh 'git config --global user.name "Jenkins"'
+                        
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config  --list'
+                        
+                        sh "git remote set-url origin https://${USER}:${PASS}@github.com/mohmawoed/java-maven-app.git"
+                        sh 'git add .'
+                        sh 'git commit -m "Jenkins automated commit"'
+                        sh 'git push origin HEAD:feature/SoftVer'
+                   
+
                    // sh 'git add .'
                     //sh 'git commit -m "update version"
-                    sh 'git push origin HEAD:feature/SoftVer'
+                   
+                    }
 
                 }
                 
