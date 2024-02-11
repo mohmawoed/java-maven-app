@@ -56,7 +56,7 @@ pipeline {
                  //   sh 'git config --global user.name "Jenkins"'
                    // sh 'git add .'
                     //sh 'git commit -m "update version"
-                    //sh 'git push origin HEAD:feature/SoftVer'
+                    sh 'git push origin HEAD:feature/SoftVer'
 
                 }
                 
