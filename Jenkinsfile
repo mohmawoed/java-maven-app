@@ -74,6 +74,7 @@ pipeline {
                         sh 'git status'
                         sh 'git branch'
                         sh 'git config  --list'
+                        sh "git remote set-url origin https://mohmawoed:${github-token}@github.com/mohmawoed/java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "Jenkins automated commit"'
                         sh 'git push origin HEAD:feature/SoftVer'
