@@ -46,7 +46,7 @@ pipeline {
             }
         }
         stage("Commit Version update"){
-            setps{
+            steps{
                 script{
                     checkout scm
                     sh 'git add .'
