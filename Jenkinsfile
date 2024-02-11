@@ -51,7 +51,7 @@ pipeline {
                     checkout scm
                     sh 'git add .'
                     sh 'git commit -m "Jenkins automated commit"'
-             //       git credentialsId: GITHUB_CREDENTIALS, url: 'https://github.com/mohmawoed/java-maven-app.git'' 
+                    git credentialsId: GITHUB_CREDENTIALS, url: 'https://github.com/mohmawoed/java-maven-app.git'' 
                //     sh 'git config --global user.email "Jenkins@example.com"'
                  //   sh 'git config --global user.name "Jenkins"'
                    // sh 'git add .'
