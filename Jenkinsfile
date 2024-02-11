@@ -67,7 +67,7 @@ pipeline {
                    
                     }**/
 
-                    checkout([$class: 'GitSCM', branches: [[name: 'feature/SoftVer']], userRemoteConfigs: [[url: 'https://github.com/mohmawoed/java-maven-app.gi', credentialsId: 'github-token']]])
+                    checkout([$class: 'GitSCM', branches: [[name: 'feature/SoftVer']], userRemoteConfigs: [[url: 'https://github.com/mohmawoed/java-maven-app.git', credentialsId: 'github-token']]])
                         sh 'git config --global user.email "Jenkins@example.com"'
                         sh 'git config --global user.name "Jenkins"'
                         
