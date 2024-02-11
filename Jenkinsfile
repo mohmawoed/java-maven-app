@@ -7,7 +7,11 @@ pipeline {
     }
     environment {
         GITHUB_CREDENTIALS = credentials('github-token')
-    }
+        GIT_AUTHOR_NAME = 'Jenkins user account'
+        GIT_AUTHOR_EMAIL = 'jenkins@example.com'
+        GIT_COMMITTER_NAME = 'jenkins user account'
+        GIT_COMMITTER_EMAIL =  'jenkins@example.com'
+            }
     stages {
         stage("increment version") {
             steps {
@@ -41,9 +45,12 @@ pipeline {
                 }
             }
         }
-       //stage("Commit Version update"){
-         //   setps{
-           //     script{
+        stage("Commit Version update"){
+            setps{
+                script{
+                    checkout scm
+                    sh 'git add .'
+                    sh 'git commit -m "Jenkins automated commit"'
              //       git credentialsId: GITHUB_CREDENTIALS, url: 'https://github.com/mohmawoed/java-maven-app.git'' 
                //     sh 'git config --global user.email "Jenkins@example.com"'
                  //   sh 'git config --global user.name "Jenkins"'
@@ -51,9 +58,9 @@ pipeline {
                     //sh 'git commit -m "update version"
                     //sh 'git push origin HEAD:feature/SoftVer'
 
-                //}
+                }
                 
-            //}
-        //}
+            }
+        }
     }
 }
